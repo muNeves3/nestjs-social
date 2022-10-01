@@ -1,0 +1,15 @@
+{
+    "workbench.colorTheme": "Dracula Soft",
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "vsicons.dontShowNewVersionMessage": true,
+    "git.autofetch": true,
+    "explorer.compactFolders": false,
+    "editor.inlineSuggest.enabled": true,
+    "window.zoomLevel": -1,
+    "editor.formatOnSave": true,
+    "editor.minimap.enabled": false
+  }
+  
