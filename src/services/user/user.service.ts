@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { IUserDTO } from 'src/interfaces/UserDTO';
 import { client } from 'src/prisma/client';
 import { User } from '@prisma/client';
@@ -16,7 +16,13 @@ export class UserService {
     });
 
     if (!user) {
-      throw new Error('User already exists');
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'This email is already in use',
+        },
+        HttpStatus.FORBIDDEN,
+      );
     }
 
     return user;
@@ -33,7 +39,13 @@ export class UserService {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'User not found',
+        },
+        HttpStatus.FORBIDDEN,
+      );
     }
 
     return user;
@@ -43,5 +55,25 @@ export class UserService {
     const users = await client.user.findMany();
 
     return users;
+  }
+
+  async deleteUser(id: number): Promise<User> {
+    const user = await client.user.delete({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'User not found',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    return user;
   }
 }
