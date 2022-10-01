@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Like, Post, Prisma } from '@prisma/client';
 import { CreatePostDTO } from 'src/interfaces/CreatePostDTO';
 import { PostWithLikeDTO } from 'src/interfaces/PostWithLikeDTO';
