@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 
 import { AppController } from './controllers/app.controller';
 import { UserController } from './controllers/user.controller';
@@ -13,7 +13,7 @@ import { FollowerController } from './controllers/follower.controller';
 import { FollowerService } from './services/follower/follower.service';
 
 @Module({
-  imports: [],
+  imports: [CacheModule.register()],
   controllers: [
     AppController,
     UserController,

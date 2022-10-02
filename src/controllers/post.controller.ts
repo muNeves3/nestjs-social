@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { CreatePostDTO } from 'src/interfaces/CreatePostDTO';
 import { PostService } from 'src/services/post/post.service';
 
@@ -37,5 +37,18 @@ export class PostController {
     const posts = this.postService.getPosts();
 
     return posts;
+  }
+
+  @Delete()
+  deletePost(@Body() body: { postId: number }) {
+    const { postId } = body;
+
+    try {
+      const post = this.postService.deletePost(postId);
+
+      return post;
+    } catch (error) {
+      return error.message;
+    }
   }
 }

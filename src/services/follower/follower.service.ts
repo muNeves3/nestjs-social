@@ -1,10 +1,23 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
+import { Follower } from '@prisma/client';
+import { Cache } from 'cache-manager';
 import { CreateFollowerDTO } from 'src/interfaces/CreateFollowerDTO';
 import { client } from 'src/prisma/client';
 
 @Injectable()
 export class FollowerService {
-  async handleFollowUser({ followerId, userId }: CreateFollowerDTO) {
+  constructor(@Inject(CACHE_MANAGER) private cachemanager: Cache) {}
+
+  async handleFollowUser({
+    followerId,
+    userId,
+  }: CreateFollowerDTO): Promise<Follower> {
     if (followerId === userId) {
       throw new HttpException(
         {
@@ -40,12 +53,19 @@ export class FollowerService {
     });
   }
 
-  async getUserFollowers(userId: number) {
-    const followers = await client.follower.findMany({
-      where: {
-        userId: userId,
-      },
-    });
+  async getUserFollowers(userId: number): Promise<Follower[]> {
+    const cachekey = `follower:${userId}`;
+    let followers = await this.cachemanager.get<Follower[]>(cachekey);
+
+    if (!followers) {
+      followers = await client.follower.findMany({
+        where: {
+          userId: userId,
+        },
+      });
+
+      await this.cachemanager.set(cachekey, followers, 60 * 60 * 24);
+    }
 
     return followers;
   }

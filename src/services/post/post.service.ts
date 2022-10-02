@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Like, Post, Prisma } from '@prisma/client';
 import { CreatePostDTO } from 'src/interfaces/CreatePostDTO';
 import { PostWithLikeDTO } from 'src/interfaces/PostWithLikeDTO';
@@ -64,5 +64,25 @@ export class PostService {
     );
 
     return posts;
+  }
+
+  async deletePost(id: number): Promise<Post> {
+    const post = await client.post.delete({
+      where: {
+        id,
+      },
+    });
+
+    if (!post) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'This post does not exist',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    return post;
   }
 }
