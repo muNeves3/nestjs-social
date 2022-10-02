@@ -34,7 +34,8 @@ model Post {
 model Like {
   id        Int      @id @default(autoincrement())
   userId    Int
-  postId    Int
+  postId    Int?
+  commentId Int?
   createdAt DateTime @default(now())
 
   @@map("likes")
@@ -44,8 +45,8 @@ model Comment {
   id          Int      @id @default(autoincrement())
   text        String
   postId      Int
+  userId      Int
   publishedAt DateTime @default(now())
-  likes       Int      @default(0)
 
   @@map("comment")
 }
