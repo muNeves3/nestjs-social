@@ -28,7 +28,6 @@ export class PostController {
 
       return like;
     } catch (error) {
-      console.log(error);
       return error.message;
     }
   }

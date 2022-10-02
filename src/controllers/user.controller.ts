@@ -43,4 +43,11 @@ export class UserController {
 
     return users;
   }
+
+  @Get('/with-followers')
+  async getUserWithFollowers() {
+    const users = await this.userService.getUserWithFollowers();
+
+    return users;
+  }
 }

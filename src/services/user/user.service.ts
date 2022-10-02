@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { IUserDTO } from 'src/interfaces/UserDTO';
 import { client } from 'src/prisma/client';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { UpdateUserDTO } from 'src/interfaces/UpdateUserDTO';
+import { IUserWithFollowersDTO } from 'src/interfaces/UserWithFollowersDTO';
 
 @Injectable()
 export class UserService {
@@ -53,6 +54,20 @@ export class UserService {
 
   async getUsers(): Promise<User[]> {
     const users = await client.user.findMany();
+
+    return users;
+  }
+
+  async getUserWithFollowers(): Promise<IUserWithFollowersDTO[]> {
+    const users: IUserWithFollowersDTO[] = await client.$queryRaw(
+      Prisma.sql`SELECT CAST(count(follower) as int) as "followers", "user".* FROM "user"
+    LEFT OUTER JOIN follower on "user".id = follower."userId"
+    GROUP BY
+      "user".id,
+      "user".email,
+      "user".name,
+      "user"."createdAt"`,
+    );
 
     return users;
   }

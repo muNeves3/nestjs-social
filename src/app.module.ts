@@ -9,6 +9,8 @@ import { UserService } from './services/user/user.service';
 import { PostService } from './services/post/post.service';
 import { CommentController } from './controllers/comment.controller';
 import { CommentService } from './services/comment/comment.service';
+import { FollowerController } from './controllers/follower.controller';
+import { FollowerService } from './services/follower/follower.service';
 
 @Module({
   imports: [],
@@ -17,7 +19,14 @@ import { CommentService } from './services/comment/comment.service';
     UserController,
     PostController,
     CommentController,
+    FollowerController,
   ],
-  providers: [AppService, UserService, PostService, CommentService],
+  providers: [
+    AppService,
+    UserService,
+    PostService,
+    CommentService,
+    FollowerService,
+  ],
 })
 export class AppModule {}
