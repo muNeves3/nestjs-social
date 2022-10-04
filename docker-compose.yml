@@ -1,45 +1,28 @@
-version: '3.7'
-
+version: '3.8'
 services:
-  main:
-    container_name: main
+  nest-api:
+    container_name: nest-api
     build:
       context: .
-      target: development
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+      dockerfile: Dockerfile
     ports:
-      - 5432:5432
-      - 9229:9229
-    command: yarn run start:dev
+      - 3000:3000
+    depends_on:
+      - postgres
     env_file:
       - .env
-    networks:
-      - webnet
-    depends_on:
-      - redis
-      - postgres
-  redis:
-    container_name: redis
-    image: redis:5
-    networks:
-      - webnet
+
   postgres:
+    image: postgres:13
     container_name: postgres
-    image: postgres:12
-    networks:
-      - webnet
-    environment:
-      POSTGRES_PASSWORD: mureca
-      POSTGRES_USER: postgres
-      POSTGRES_DB: testenestjs
-      PG_DATA: /var/lib/postgresql/data
+    restart: always
     ports:
       - 5432:5432
+    env_file:
+      - .env
     volumes:
-      - pgdata:/var/lib/postgresql/data
-networks:
-  webnet:
+      - postgres:/var/lib/postgresql/data
+
 volumes:
-  pgdata:
+  postgres:
+    name: nest-db

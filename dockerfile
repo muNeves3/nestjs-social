@@ -21,4 +21,4 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000
-CMD [ "yarn", "run", "start:prod" ]
+CMD [ "yarn", "run", "start" ]
