@@ -4,6 +4,12 @@ orbs:
   heroku: circleci/heroku@1.2.6
 
 jobs:
+  build:
+    docker:
+      - image: muriloneves/nestjs
+        auth:
+          username: muriloneves
+          password: murilogrilo2212 # context / project UI env-var reference
   build_and_test:
     executor: node/default
     steps:
@@ -28,6 +34,10 @@ jobs:
             curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - setup_remote_docker
+      - run:
+          name: Build images of services declared in docker-compose.yml
+          command: docker-compose build
       - run:
           name: Build images of services declared in docker-compose.yml
           command: docker compose up

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   nest-api:
-    image: muriloneves/nest-api:latest 
+    image: nest-api:latest 
     container_name: nest-api
     build:
       context: .
