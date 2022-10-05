@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: muriloneves/nestjs
+      - image: muriloneves/nest-api
         auth:
           username: muriloneves
           password: murilogrilo2212 # context / project UI env-var reference
