@@ -41,7 +41,7 @@ jobs:
           force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
 
 workflows:
- heroku_deploy:
+  heroku_deploy:
     jobs:
       - heroku/deploy-via-git
   test_my_app:
