@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   nest-api:
+    image: muriloneves/nest-api:latest 
     container_name: nest-api
     build:
       context: .
@@ -22,7 +23,7 @@ services:
       - .env
     volumes:
       - postgres:/var/lib/postgresql/data
-
+  
 volumes:
   postgres:
     name: nest-db
