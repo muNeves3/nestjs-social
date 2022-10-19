@@ -11,6 +11,12 @@
 
 A simple social media API made with NestJS framework, alongside with circleci and docker
 
+#### Routes
+
+- **Comment**: Create/Like/Delete/View
+- **Post**: Create/Like/Delete/View
+- **User**: Create/Edit/View/Delete/Follow
+
 ## Installation
 
 ```bash
@@ -43,14 +49,6 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
 ## Stay in touch
 
 - LinkedIn - [Murilo Neves](https://www.linkedin.com/in/murilo-souza-5b672a1a0/)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
